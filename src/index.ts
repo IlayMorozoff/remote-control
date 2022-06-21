@@ -1,39 +1,19 @@
-import Jimp from 'jimp';
+import dotenv from 'dotenv';
+// import WebSocket, { createWebSocketStream } from 'ws';
 import { httpServer } from './http_server/index';
-import robot from 'robotjs';
-import { WebSocketServer } from 'ws';
-import { WebSocketController } from './websocket/websocket';
+import { WebSocketController } from './webSocketServer/webSocketServer';
+
+dotenv.config();
 
 const HTTP_PORT = 3000;
 
-// const wss = new WebSocketController(8080);
+const WEBSOCKET_PORT = process.env.WEBSOCKET || 8080;
 
-// wss.join()
+// const ws1 = new WebSocket('wss://websocket-echo.com/');
 
-const wss = new WebSocketServer({
-  port: 8080
-});
+// const duplex = createWebSocketStream(ws1, { encoding: 'utf8' });
 
-wss.on('connection', (ws) => {
-    console.log('подключение совершилось')
-
-    ws.on('message', (message) => {
-
-      const { x, y } = robot.getMousePos();
-
-      console.log('dadada',  x, y)
-      // теперь отправляем
-      ws.send(`mouse_position ${x},${y}`)
-    });
-
-
-    ws.on('close', () => {
-      console.log('клиент закончил работу')
-      
-    })
-    
-
-})
+const ws = new WebSocketController(+WEBSOCKET_PORT);
 
 httpServer.listen(HTTP_PORT, () => {
   console.log(`Start static http server on the ${HTTP_PORT} port!`);
