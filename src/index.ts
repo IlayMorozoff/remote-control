@@ -1,13 +1,12 @@
 import dotenv from 'dotenv';
-// import WebSocket, { createWebSocketStream } from 'ws';
 import { httpServer } from './http_server/index';
 import { WebSocketController } from './webSocketServer/webSocketServer';
 
 dotenv.config();
 
-const HTTP_PORT = 3000;
+const HTTP_PORT = process.env.STATIC_SERVER_PORT || 3000;
 
-const WEBSOCKET_PORT = process.env.WEBSOCKET || 8080;
+const WEBSOCKET_PORT = process.env.WEBSOKET_PORT || 8080;
 
 const ws = new WebSocketController(+WEBSOCKET_PORT);
 

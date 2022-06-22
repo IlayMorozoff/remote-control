@@ -11,19 +11,17 @@ export class WebSocketController extends WebSocketServer {
         console.log(`Start WebSocket server on the ${port} port!`);
 
         this.on('connection', (ws) => {
-            console.log('Client connection')
+            console.log('Client connected');
             const duplex = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
 
             duplex.on('data', async (data) => {
-                console.log(data)
                 const response = await this.webSockerService.requestHandler(data);
+                console.log(response)
                 duplex.write(response);
             });
-
-            ws.on('close', () => {
-                console.log('socket closed')
-                this.close();
-            });
+        });
+        this.on('close', () => {
+            console.log('socket closed');
         });
     }
 }
