@@ -8,23 +8,16 @@
 ## Usage
 **Development**
 
-`npm run start:dev`
 
-* App served @ `http://localhost:8181` with nodemon
+* To run the application in development mode with nodemon, you need to enter the `npm run start:dev` command into the terminal
 
 **Production**
 
-`npm run start`
 
-* App served @ `http://localhost:8181` without nodemon
+* To run the application in production mode without nodemon, you need to enter the `npm run start` command into the terminal
 
 ---
 
-**All commands**
+* to access a static server with a frontend part, you need to insert this link into your browser `http://localhost:3000/`
 
-Command | Description
---- | ---
-`npm run dev` | App served @ `http://localhost:8181` with nodemon
-`npm run start` | App served @ `http://localhost:8181` without nodemon
-
-**Note**: replace `npm` with `yarn` in `package.json` if you use yarn.
+* An application with a server on websockets runs on port `8080` by default, but you can change it in the .env file
