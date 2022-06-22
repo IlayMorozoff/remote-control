@@ -19,6 +19,10 @@ export class WebSocketController extends WebSocketServer {
                 console.log(response)
                 duplex.write(response);
             });
+
+            ws.on('close', () => {
+                console.log('Client disconnected');
+            });
         });
         this.on('close', () => {
             console.log('socket closed');
