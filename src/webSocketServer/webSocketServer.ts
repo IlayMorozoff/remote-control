@@ -1,5 +1,6 @@
 import { WebSocketService } from '../webSocketService/webSocketService';
-import { WebSocketServer } from 'ws';
+import { createWebSocketStream, WebSocketServer } from 'ws';
+
 
 export class WebSocketController extends WebSocketServer {
     private webSockerService: WebSocketService;
@@ -7,15 +8,21 @@ export class WebSocketController extends WebSocketServer {
     constructor(port: number) {
         super({ port });
         this.webSockerService = new WebSocketService();
+        console.log(`Start WebSocket server on the ${port} port!`);
 
         this.on('connection', (ws) => {
-            console.log('Connection!!!');
+            console.log('Client connection')
+            const duplex = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
 
-            ws.on('message', async (data) => {
-                console.log('received: ', data.toString());
-                const response = await this.webSockerService.requestHandler(data.toString());
-                ws.send(response);
-                
+            duplex.on('data', async (data) => {
+                console.log(data)
+                const response = await this.webSockerService.requestHandler(data);
+                duplex.write(response);
+            });
+
+            ws.on('close', () => {
+                console.log('socket closed')
+                this.close();
             });
         });
     }

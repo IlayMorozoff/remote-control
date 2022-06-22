@@ -8,8 +8,8 @@ export class DrawingService {
     const mousePos = robot.getMousePos();
 
     for (let i = 0; i <= twoPI; i += 0.1) {
-        const x = mousePos.x + (radius * Math.sin(i));
-        const y = mousePos.y + (radius * Math.cos(i));
+        const x = mousePos.x  + (radius * Math.cos(i)) - radius;
+        const y = mousePos.y + (radius * Math.sin(i));
 
         robot.dragMouse(x, y);
         robot.mouseToggle('down');

@@ -7,7 +7,7 @@ export class PrintScreenService {
   async getPrintScreenMsg(size: number) {
     const { x, y } = robot.getMousePos();
 
-    const img = robot.screen.capture(x / 2, y / 2, size, size);
+    const img = robot.screen.capture(x - size / 2, y - size / 2, size, size);
     const path = 'myfile.png';
 
     const jimp = new Jimp(size, size);
